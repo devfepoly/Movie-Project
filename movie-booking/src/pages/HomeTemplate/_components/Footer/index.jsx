@@ -1,19 +1,34 @@
+import { Film, Mail, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
+
 export default function Footer() {
     return (
-        <footer className="bg-gray-900 text-gray-300 border-t border-gray-800">
-            <div className="container mx-auto px-6 lg:px-8 py-16">
+        <footer className="relative bg-linear-to-b from-[#13131A] to-[#0A0A0F] text-gray-300 border-t border-white/10 mt-20">
+            {/* Gradient Top Border */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-pink-500/50 to-transparent" />
+
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     {/* Company Info */}
-                    <div className="space-y-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-6"
+                    >
                         <div className="flex items-center space-x-3">
-                            <div className="bg-pink-500 p-2.5 rounded-xl">
-                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                                </svg>
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-linear-to-br from-pink-500 to-purple-600 rounded-xl blur-md opacity-50" />
+                                <div className="relative bg-linear-to-br from-pink-500 to-purple-600 p-2.5 rounded-xl">
+                                    <Film className="w-6 h-6 text-white" strokeWidth={2.5} />
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-white">Cine<span className="text-pink-500">Max</span></h3>
+                            <h3 className="text-xl font-bold">
+                                <span className="text-white">Cine</span>
+                                <span className="gradient-text">Max</span>
+                            </h3>
                         </div>
-                        <p className="text-sm leading-relaxed">
+                        <p className="text-sm leading-relaxed text-gray-400">
                             Your ultimate destination for movie bookings. Experience cinema like never before.
                         </p>
                         <div className="flex space-x-4">
@@ -33,10 +48,15 @@ export default function Footer() {
                                 </svg>
                             </a>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Quick Links */}
-                    <div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                    >
                         <h4 className="text-base font-semibold mb-6 text-white">Quick Links</h4>
                         <ul className="space-y-3">
                             <li><a href="#" className="text-sm hover:text-pink-500 transition-colors duration-300">About Us</a></li>
@@ -44,10 +64,15 @@ export default function Footer() {
                             <li><a href="#" className="text-sm hover:text-pink-500 transition-colors duration-300">FAQ</a></li>
                             <li><a href="#" className="text-sm hover:text-pink-500 transition-colors duration-300">Privacy Policy</a></li>
                         </ul>
-                    </div>
+                    </motion.div>
 
                     {/* Movies */}
-                    <div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                    >
                         <h4 className="text-base font-semibold mb-6 text-white">Movies</h4>
                         <ul className="space-y-3">
                             <li><a href="#" className="text-sm hover:text-pink-500 transition-colors duration-300">Now Showing</a></li>
@@ -55,11 +80,19 @@ export default function Footer() {
                             <li><a href="#" className="text-sm hover:text-pink-500 transition-colors duration-300">Top Rated</a></li>
                             <li><a href="#" className="text-sm hover:text-pink-500 transition-colors duration-300">All Movies</a></li>
                         </ul>
-                    </div>
+                    </motion.div>
 
                     {/* Newsletter */}
-                    <div>
-                        <h4 className="text-base font-semibold mb-6 text-white">Newsletter</h4>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        <h4 className="text-base font-semibold mb-6 text-white flex items-center gap-2">
+                            <Mail className="w-5 h-5 text-pink-500" />
+                            Newsletter
+                        </h4>
                         <p className="text-sm mb-5 leading-relaxed">
                             Subscribe to get special offers and updates
                         </p>
@@ -67,19 +100,33 @@ export default function Footer() {
                             <input
                                 type="email"
                                 placeholder="Your email"
-                                className="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-pink-500/50 focus:bg-white/10 transition-all duration-300"
                             />
-                            <button className="w-full px-4 py-2.5 bg-pink-500 text-white text-sm font-semibold rounded-lg hover:bg-pink-600 transition-all duration-300">
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-full px-4 py-2.5 bg-linear-to-r from-pink-500 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300"
+                            >
                                 Subscribe
-                            </button>
+                            </motion.button>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-16 pt-8 border-t border-gray-800 text-center">
-                    <p className="text-sm text-gray-400">&copy; 2025 CineMax. All rights reserved. Made with ❤️ for movie lovers.</p>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                    className="mt-16 pt-8 border-t border-white/10 text-center"
+                >
+                    <p className="text-sm text-gray-400 flex items-center justify-center gap-2">
+                        &copy; 2025 CineMax. All rights reserved. Made with
+                        <Heart className="w-4 h-4 text-pink-500 fill-pink-500 animate-pulse" />
+                        for movie lovers.
+                    </p>
+                </motion.div>
             </div>
         </footer>
     );
