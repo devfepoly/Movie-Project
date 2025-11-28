@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { ArrowLeft, AlertCircle } from 'lucide-react';
 
-import { fetchMovieDetail, fetchMovieShowtimes, clearMovieDetail } from './slice';
+import { fetchMovieDetail, clearMovieDetail } from './slice';
 import MovieHero from './components/MovieHero';
 import MovieInfo from './components/MovieInfo';
 import ShowtimeSection from './components/ShowtimeSection';
@@ -15,7 +15,7 @@ export default function MovieDetail() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { movieDetail, showtimes, loading, error, showtimesLoading } = useSelector(
+    const { movieDetail, loading, error } = useSelector(
         (state) => state.movieDetail
     );
 
@@ -24,12 +24,9 @@ export default function MovieDetail() {
     useEffect(() => {
         if (id) {
             console.log('🎬 Fetching movie detail for ID:', id);
-            // Fetch movie detail and showtimes
             dispatch(fetchMovieDetail(id));
-            dispatch(fetchMovieShowtimes(id));
         }
 
-        // Cleanup on unmount
         return () => {
             dispatch(clearMovieDetail());
         };
@@ -40,13 +37,10 @@ export default function MovieDetail() {
         if (movieDetail) {
             console.log('✅ Movie Detail Data:', movieDetail);
         }
-        if (showtimes) {
-            console.log('🎫 Showtimes Data:', showtimes);
-        }
         if (error) {
             console.error('❌ Error:', error);
         }
-    }, [movieDetail, showtimes, error]);
+    }, [movieDetail, error]);
 
     // Scroll to top when component mounts
     useEffect(() => {
@@ -55,10 +49,10 @@ export default function MovieDetail() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+            <div className="min-h-screen bg-bg-primary flex items-center justify-center">
                 <div className="text-center">
-                    <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500 mb-4"></div>
-                    <p className="text-white text-lg font-semibold">Đang tải thông tin phim...</p>
+                    <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-border-default border-t-accent-primary mb-4"></div>
+                    <p className="text-text-primary text-lg font-medium">Đang tải thông tin phim...</p>
                 </div>
             </div>
         );
@@ -66,22 +60,22 @@ export default function MovieDetail() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+            <div className="min-h-screen bg-bg-primary flex items-center justify-center p-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 max-w-lg text-center"
+                    className="bg-bg-secondary border border-accent-primary rounded-xl p-8 max-w-lg text-center"
                 >
-                    <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-white mb-2">Có lỗi xảy ra</h2>
-                    <p className="text-gray-300 mb-6">
+                    <AlertCircle className="w-16 h-16 text-accent-primary mx-auto mb-4" strokeWidth={2} />
+                    <h2 className="text-2xl font-semibold text-text-primary mb-2">Có lỗi xảy ra</h2>
+                    <p className="text-text-secondary mb-6">
                         {typeof error === 'string' ? error : 'Không thể tải thông tin phim'}
                     </p>
                     <button
                         onClick={() => navigate(-1)}
-                        className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center gap-2"
+                        className="bg-accent-primary hover:bg-accent-hover text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 border border-accent-primary"
                     >
-                        <ArrowLeft className="w-5 h-5" />
+                        <ArrowLeft className="w-5 h-5" strokeWidth={2} />
                         Quay lại
                     </button>
                 </motion.div>
@@ -94,18 +88,17 @@ export default function MovieDetail() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0A0E27]">
+        <div className="min-h-screen bg-bg-primary pt-16">
             {/* Back Button */}
-            <div className="absolute top-6 left-6 z-50">
+            <div className="absolute top-20 left-4 sm:left-6 z-50">
                 <motion.button
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    whileHover={{ scale: 1.05, x: -5 }}
-                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
                     onClick={() => navigate(-1)}
-                    className="bg-black/40 backdrop-blur-md hover:bg-black/60 text-white px-5 py-2.5 rounded-xl font-medium transition-all inline-flex items-center gap-2 border border-white/10 hover:border-white/20 shadow-lg"
+                    className="bg-bg-secondary hover:bg-bg-tertiary text-text-primary px-5 py-2.5 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 border border-border-default hover:border-accent-primary"
                 >
-                    <ArrowLeft className="w-4 h-4" />
+                    <ArrowLeft className="w-5 h-5" strokeWidth={2} />
                     <span>Quay lại</span>
                 </motion.button>
             </div>
@@ -117,13 +110,13 @@ export default function MovieDetail() {
             />
 
             {/* Content Section */}
-            <div className="container mx-auto px-4 py-12">
-                <div className="max-w-7xl mx-auto space-y-6">
+            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="space-y-6">
                     {/* Main Content */}
                     <MovieInfo movie={movieDetail} />
                     <ShowtimeSection
-                        showtimes={showtimes}
-                        loading={showtimesLoading}
+                        showtimes={movieDetail?.showtimes}
+                        loading={false}
                     />
                 </div>
             </div>

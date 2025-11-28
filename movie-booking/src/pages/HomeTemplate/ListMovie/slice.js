@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../../services/api";
 
 const initialState = {
     data: [],
@@ -9,18 +9,14 @@ const initialState = {
 
 export const fetchListMovie = createAsyncThunk(
     "listMovie/fetchListMovie",
-    async (__, { rejectWithValue }) => {
+    async (maNhom = "GP01", { rejectWithValue }) => {
         try {
-            const result = await axios({
-                method: "GET",
-                url: "https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP01",
-                headers: {
-                    TokenCybersoft: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA5MCIsIkhldEhhblN0cmluZyI6IjI5LzA1LzIwMjYiLCJIZXRIYW5UaW1lIjoiMTc4MDAxMjgwMDAwMCIsIm5iZiI6MTc1MzAzMDgwMCwiZXhwIjoxNzgwMTYwNDAwfQ.KkGRtLpEsgoM4M_TapjOZIzvAwbay3QvXIwwN8XUqWk"
-                },
-            });
-            return result.data.content;
+            const { data } = await api.get(`/QuanLyPhim/LayDanhSachPhim?maNhom=${maNhom}`);
+            console.log('✅ Movies fetched:', data.content);
+            return data.content;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            console.error('❌ Error fetching movies:', error);
+            return rejectWithValue(error.response?.data || error.message);
         }
     }
 );
@@ -28,6 +24,12 @@ export const fetchListMovie = createAsyncThunk(
 const listMovieSlice = createSlice({
     name: "listMovie",
     initialState,
+    reducers: {
+        clearListMovie: (state) => {
+            state.data = [];
+            state.error = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchListMovie.pending, (state) => {
@@ -40,9 +42,10 @@ const listMovieSlice = createSlice({
             })
             .addCase(fetchListMovie.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.error.message;
+                state.error = action.payload;
             });
     },
 });
 
+export const { clearListMovie } = listMovieSlice.actions;
 export const listMovieReducer = listMovieSlice.reducer;

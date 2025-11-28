@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play } from 'lucide-react';
 
@@ -20,7 +19,7 @@ export default function TrailerModal({ isOpen, onClose, trailerUrl }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm"
+                    className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/90"
                     onClick={onClose}
                 >
                     {/* Close Button */}
@@ -30,26 +29,23 @@ export default function TrailerModal({ isOpen, onClose, trailerUrl }) {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ delay: 0.1 }}
                         onClick={onClose}
-                        className="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all backdrop-blur-md border border-white/10 hover:border-white/30 group z-10"
+                        className="absolute top-6 right-6 bg-bg-secondary hover:bg-bg-tertiary text-text-primary p-3 rounded-lg transition-colors duration-200 border border-border-default hover:border-accent-primary group z-10"
                     >
-                        <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
+                        <X className="w-6 h-6 transition-transform duration-200 group-hover:rotate-90" strokeWidth={2} />
                     </motion.button>
 
                     {/* Video Container */}
                     <motion.div
-                        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                        animate={{ scale: 1, opacity: 1, y: 0 }}
-                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
                         className="relative w-full max-w-6xl"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Glow Effect */}
-                        <div className="absolute -inset-1 bg-linear-to-br from-pink-500 via-purple-500 to-cyan-500 rounded-2xl opacity-20 blur-2xl" />
-
                         {/* Video */}
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                            <div className="relative pt-[56.25%] bg-black">
+                        <div className="relative rounded-xl overflow-hidden border border-border-default">
+                            <div className="relative pt-[56.25%] bg-bg-primary">
                                 {videoId ? (
                                     <iframe
                                         className="absolute inset-0 w-full h-full"
@@ -61,8 +57,8 @@ export default function TrailerModal({ isOpen, onClose, trailerUrl }) {
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                                        <Play className="w-16 h-16 text-gray-600" />
-                                        <p className="text-gray-400 text-lg">Trailer không khả dụng</p>
+                                        <Play className="w-16 h-16 text-text-muted" strokeWidth={2} />
+                                        <p className="text-text-secondary text-lg">Trailer không khả dụng</p>
                                     </div>
                                 )}
                             </div>

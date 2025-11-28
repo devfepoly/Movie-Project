@@ -14,6 +14,9 @@ const MovieDetail = lazy(() => import('../pages/HomeTemplate/MovieDetail'));
 const Dashboard = lazy(() => import('../pages/AdminTemplate/Dashboard'));
 const AddUser = lazy(() => import('../pages/AdminTemplate/AddUser'));
 
+// Lazy load pages - Auth (Standalone)
+const Auth = lazy(() => import('../pages/AdminTemplate/Auth'));
+
 // Lazy load standalone pages
 const PageNotFound = lazy(() => import('../pages/PageNotFound'));
 
@@ -31,10 +34,22 @@ export const router = createBrowserRouter([
                 element: <ListMovie />
             },
             {
-                path: 'movie/:id',
+                path: 'movie-detail/:id',
                 element: <MovieDetail />
             }
         ]
+    },
+    {
+        path: '/auth',
+        element: <Auth />
+    },
+    {
+        path: '/auth/login',
+        element: <Auth />
+    },
+    {
+        path: '/auth/register',
+        element: <Auth />
     },
     {
         path: '/admin',
@@ -42,6 +57,10 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                element: <Dashboard />
+            },
+            {
+                path: 'dashboard',
                 element: <Dashboard />
             },
             {

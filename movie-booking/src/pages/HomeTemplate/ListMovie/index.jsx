@@ -13,8 +13,13 @@ export default function ListMovie() {
   const [viewMode, setViewMode] = useState('grid');
 
   useEffect(() => {
+    console.log('🎬 Dispatching fetchListMovie...');
     dispatch(fetchListMovie());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log('📊 Movies state:', movies);
+  }, [movies]);
 
   // Filter and sort movies
   const filteredMovies = useMemo(() => {
